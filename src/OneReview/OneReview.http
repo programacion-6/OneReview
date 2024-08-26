@@ -1,0 +1,6 @@
+@OneReview_HostAddress = http://localhost:5267
+
+GET {{OneReview_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
