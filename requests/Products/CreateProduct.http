@@ -1,0 +1,15 @@
+# @name create
+
+POST {{host}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "zenbook",
+  "description": "best laptop for programming",
+  "category": "laptops",
+  "subCategory": "technology"
+}
+
+### Get based on location model
+
+GET {{create.response.headers.Location}}

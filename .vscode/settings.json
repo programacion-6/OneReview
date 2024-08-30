@@ -1,0 +1,11 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {},
+    "dev": {
+      "host": "http://localhost:5267"
+    },
+    "production": {
+      "host": "https://myapi.com"
+    }
+  }
+}

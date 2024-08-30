@@ -1,0 +1,2 @@
+GET {{host}}/api/v1/products/4a27f12e-8295-4a69-8b1b-6ebd0b619afb
+Content-Type: application/json
