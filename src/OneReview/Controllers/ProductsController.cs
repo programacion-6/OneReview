@@ -1,7 +1,8 @@
 ﻿namespace OneReview.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using OneReview.Domain;
+using OneReview.Mappers.Requests;
+using OneReview.Mappers.Responses;
 using OneReview.Services;
 
 [ApiController]
@@ -39,43 +40,5 @@ public class ProductsController(ProductsService productsService) : ControllerBas
         return product is null 
             ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Product not found (productId {productId})")
             : Ok(ProductResponse.FromDomain(product));
-    }
-    
-    public record CreateProductRequest(
-        string Name,
-        string Description,
-        string Category,
-        string SubCategory)
-    {
-        public Product ToDomain()
-        {
-            return new Product
-            {
-                Name = Name,
-                Description = Description,
-                Category = Category,
-                SubCategory = SubCategory
-            };
-        }
-    }
-
-    public record ProductResponse(
-        Guid Id,
-        string Name,
-        string Description,
-        string Category,
-        string SubCategory)
-    {
-        public static ProductResponse FromDomain(Product product)
-        {
-            return new ProductResponse
-            (
-                product.Id,
-                product.Name,
-                product.Description,
-                product.Category,
-                product.SubCategory
-            );
-        }
     }
 }
