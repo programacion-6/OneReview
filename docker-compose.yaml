@@ -11,6 +11,10 @@ services:
       - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - Database__ConnectionString__DefaultConnection=Host=db;Port=5432;Database=dbpreview;Username=postgres;Password=strong_password
+    depends_on:
+      db:
+        condition: service_healthy
 
   # posgreSQL database
   db:
@@ -24,6 +28,11 @@ services:
       POSTGRES_PASSWORD: strong_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dbpreview"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

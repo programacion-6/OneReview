@@ -1,6 +1,6 @@
-﻿using OneReview.Domain;
+﻿namespace OneReview.Services;
 
-namespace OneReview.Services;
+using OneReview.Domain;
 
 public class ProductsService
 {

@@ -19,3 +19,5 @@ windows
 
 linux/macos
 `dotnet sln add **/**.csproj`
+
+`dotnet add src/OneReview/OneReview.csproj package DbUp-PostgreSQL`
