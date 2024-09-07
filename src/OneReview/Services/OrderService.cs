@@ -14,9 +14,10 @@
 /// FIXING CODE
 /// 1. Aplicar Strategy
 /// </summary>
-public class OrderService(IDiscountStrategy discountStrategy)
+public class OrderService(IDiscountStrategy discountStrategy, IReportGeneratorFactory reportGeneratorFactory)
 {
     private readonly IDiscountStrategy _discountStrategy = discountStrategy;
+    private readonly IReportGeneratorFactory _reportGeneratorFactory = reportGeneratorFactory;
 
     public void ProcessOrder(decimal totalAmount, string paymentMethod)
     {
@@ -40,5 +41,8 @@ public class OrderService(IDiscountStrategy discountStrategy)
         {
             throw new NotSupportedException("Payment method not suppported.");
         }
+
+        var reportGenerator = _reportGeneratorFactory.CreateReportGenerator();
+        ReportManager.Instance.GenerateReport(reportGenerator);
     }
 }
