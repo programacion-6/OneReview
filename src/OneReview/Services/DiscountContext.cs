@@ -1,8 +1,12 @@
 ﻿namespace OneReview.Services;
 
-public class DiscountContext(IDiscountStrategy strategy)
+public class DiscountContext
 {
-    private readonly IDiscountStrategy _strategy = strategy;
+    private readonly IDiscountStrategy _strategy;
+    public DiscountContext(IDiscountStrategy strategy)
+    {
+        _strategy = strategy;
+    }
     
     public decimal ProcessDiscount(decimal totalAmount)
     {
