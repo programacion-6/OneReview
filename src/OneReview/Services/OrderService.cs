@@ -40,5 +40,7 @@ public class OrderService(IDiscountStrategy discountStrategy)
         {
             throw new NotSupportedException("Payment method not suppported.");
         }
+        
+        ReportManager.Instance.GenerateSalesReport();
     }
 }
