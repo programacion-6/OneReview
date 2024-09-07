@@ -1,12 +1,11 @@
-﻿namespace OneReview.Services;
+﻿﻿using OneReview.Services.Constants;
+
+namespace OneReview.Services;
 
 public class PercentageDiscountStrategy : IDiscountStrategy
 {
-    // class DiscountConstants
-    private const decimal DefaultIndexDiscount = 0.1m;
-
     public decimal ApplyDiscount(decimal totalAmount)
     {
-        return totalAmount - (totalAmount * DefaultIndexDiscount);
+        return totalAmount - (totalAmount * DiscountConstants.DefaultIndexDiscount);
     }
 }
