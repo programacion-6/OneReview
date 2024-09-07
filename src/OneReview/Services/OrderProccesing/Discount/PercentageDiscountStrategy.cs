@@ -1,4 +1,4 @@
-﻿namespace OneReview.Services;
+﻿namespace OneReview.Services.OrderProccesing.Discount;
 
 public class PercentageDiscountStrategy : IDiscountStrategy
 {
