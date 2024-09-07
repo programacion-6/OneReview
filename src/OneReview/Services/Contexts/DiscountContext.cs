@@ -1,4 +1,4 @@
-﻿namespace OneReview.Services;
+﻿namespace OneReview.Services.Contexts;
 
 public class DiscountContext(IDiscountStrategy strategy)
 {
