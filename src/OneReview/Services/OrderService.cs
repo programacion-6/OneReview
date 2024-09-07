@@ -27,10 +27,10 @@ public class OrderService(IDiscountStrategy discountStrategy)
 
     public void ProcessOrder(decimal totalAmount)
     {
-        // Aplica el descuento
+        // apply discount
         totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
 
-        // Procesa el pago
+        // apply payment
         _paymentStrategy.ProcessPayment(totalAmount);
     }
 
