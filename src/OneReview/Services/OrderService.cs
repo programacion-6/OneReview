@@ -38,7 +38,7 @@ public class OrderService(IDiscountStrategy discountStrategy)
         }
         else
         {
-            throw new NotSupportedException("Payment method not suppported.");
+            throw new NotSupportedException("Payment method not supported.");
         }
     }
 }
