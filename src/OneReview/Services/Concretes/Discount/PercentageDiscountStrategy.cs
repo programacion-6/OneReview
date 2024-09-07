@@ -1,4 +1,6 @@
-﻿namespace OneReview.Services;
+﻿using OneReview.Services.Interfaces;
+
+namespace OneReview.Services.Concretes.Discount;
 
 public class PercentageDiscountStrategy : IDiscountStrategy
 {

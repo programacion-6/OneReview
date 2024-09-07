@@ -1,4 +1,8 @@
-﻿namespace OneReview.Services;
+﻿using OneReview.Services.Concretes.Payment;
+using OneReview.Services.Contexts;
+using OneReview.Services.Interfaces;
+
+namespace OneReview.Services;
 
 /// <summary>
 /// BAD PRACTICES
@@ -18,27 +22,19 @@ public class OrderService(IDiscountStrategy discountStrategy)
 {
     private readonly IDiscountStrategy _discountStrategy = discountStrategy;
 
-    public void ProcessOrder(decimal totalAmount, string paymentMethod)
+    public void ProcessOrder(decimal totalAmount)
     {
         // apply discount
         totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
 
         // process payment
-        if (paymentMethod == "PayPal")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through PayPal");
-        }
-        else if (paymentMethod == "Stripe")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through Stripe");
-        }
-        else if (paymentMethod == "BankTransfer")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through Bank Transfer");
-        }
-        else
-        {
-            throw new NotSupportedException("Payment method not suppported.");
-        }
+        var bankTransferContext = new PaymentContext(new BankTransferStrategy());
+        bankTransferContext.PaymentExecution(totalAmount);
+
+        var payPalContext = new PaymentContext(new PayPalStrategy());
+        payPalContext.PaymentExecution(totalAmount);
+
+        var stripeContext = new PaymentContext(new StripeStrategy());
+        stripeContext.PaymentExecution(totalAmount);
     }
 }
