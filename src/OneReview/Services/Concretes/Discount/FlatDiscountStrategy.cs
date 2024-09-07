@@ -1,4 +1,6 @@
-﻿namespace OneReview.Services.Concretes;
+﻿using OneReview.Services.Interfaces;
+
+namespace OneReview.Services.Concretes.Discount;
 
 public class FlatDiscountStrategy : IDiscountStrategy
 {
