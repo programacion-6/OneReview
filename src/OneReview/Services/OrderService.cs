@@ -1,4 +1,6 @@
-﻿namespace OneReview.Services;
+﻿using OneReview.Services.Strategies;
+
+namespace OneReview.Services;
 
 /// <summary>
 /// BAD PRACTICES
