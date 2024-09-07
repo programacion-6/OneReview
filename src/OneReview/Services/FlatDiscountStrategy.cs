@@ -3,10 +3,10 @@
 public class FlatDiscountStrategy : IDiscountStrategy
 {
     // class DiscountConstants
-    private const decimal DeafultAmountDiscount = 50;
+    private const decimal DefaultAmountDiscount = 50;
 
     public decimal ApplyDiscount(decimal totalAmount)
     {
-        return totalAmount - DeafultAmountDiscount;
+        return totalAmount - DefaultAmountDiscount;
     }
 }
