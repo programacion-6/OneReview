@@ -14,31 +14,14 @@
 /// FIXING CODE
 /// 1. Aplicar Strategy
 /// </summary>
-public class OrderService(IDiscountStrategy discountStrategy)
+public class OrderService(IDiscountStrategy discountStrategy, IPaymentStrategy paymentStrategy)
 {
     private readonly IDiscountStrategy _discountStrategy = discountStrategy;
-
-    public void ProcessOrder(decimal totalAmount, string paymentMethod)
+    private readonly IPaymentStrategy _paymentStrategy = paymentStrategy;
+    public void ProcessOrder(decimal totalAmount)
     {
         // apply discount
         totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
-
-        // process payment
-        if (paymentMethod == "PayPal")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through PayPal");
-        }
-        else if (paymentMethod == "Stripe")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through Stripe");
-        }
-        else if (paymentMethod == "BankTransfer")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through Bank Transfer");
-        }
-        else
-        {
-            throw new NotSupportedException("Payment method not suppported.");
-        }
+        _paymentStrategy.ProcessPayment(totalAmount);
     }
 }
