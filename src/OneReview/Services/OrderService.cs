@@ -17,7 +17,7 @@
 public class OrderService(IDiscountStrategy discountStrategy,IPaymentStrategy paymentStrategy)
 {
     private readonly IDiscountStrategy _discountStrategy = discountStrategy;
-    private readonly IPaymentStrategy _paymentStrategy;
+    private readonly IPaymentStrategy _paymentStrategy = paymentStrategy;
 
     public void ProcessOrder(decimal totalAmount)
     {
