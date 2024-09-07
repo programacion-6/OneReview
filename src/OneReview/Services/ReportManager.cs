@@ -24,9 +24,13 @@ public class ReportManager
         }
     }
 
-    public void GenerateSalesReport()
+    public void GenerateReport(AbstractReportGenerator reportGenerator)
     {
-        var reportGenerator = new SalesReportGenerator();
+        if (reportGenerator == null)
+        {
+            throw new ArgumentNullException(nameof(reportGenerator), "Report generator cannot be null.");
+        }
+
         reportGenerator.GenerateReport();
     }
 }
