@@ -1,5 +1,6 @@
 ﻿namespace OneReview.Services;
-
+using OneReview.Services.Discounts;
+using OneReview.Services.Payments;
 /// <summary>
 /// BAD PRACTICES
 /// - No es flexible, no es facil extender el codigo, no es facil aumenter mas metodos de pago
@@ -14,31 +15,21 @@
 /// FIXING CODE
 /// 1. Aplicar Strategy
 /// </summary>
-public class OrderService(IDiscountStrategy discountStrategy)
-{
-    private readonly IDiscountStrategy _discountStrategy = discountStrategy;
-
-    public void ProcessOrder(decimal totalAmount, string paymentMethod)
+public class OrderService
     {
-        // apply discount
-        totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
+        private readonly IDiscountStrategy _discountStrategy;
+        private readonly IPaymentStrategy _paymentStrategy;
 
-        // process payment
-        if (paymentMethod == "PayPal")
+        public OrderService(IDiscountStrategy discountStrategy, IPaymentStrategy paymentStrategy)
         {
-            Console.WriteLine($"Processing {totalAmount} payment through PayPal");
+            _discountStrategy = discountStrategy;
+            _paymentStrategy = paymentStrategy;
         }
-        else if (paymentMethod == "Stripe")
+
+        public void ProcessOrder(decimal totalAmount)
         {
-            Console.WriteLine($"Processing {totalAmount} payment through Stripe");
-        }
-        else if (paymentMethod == "BankTransfer")
-        {
-            Console.WriteLine($"Processing {totalAmount} payment through Bank Transfer");
-        }
-        else
-        {
-            throw new NotSupportedException("Payment method not suppported.");
+            totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
+
+            _paymentStrategy.ProcessPayment(totalAmount);
         }
     }
-}
