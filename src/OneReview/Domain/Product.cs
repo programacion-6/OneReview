@@ -11,4 +11,5 @@ public class Product
     public string Category { get; set; }
 
     public string SubCategory { get; set; }
+    public decimal BasePrice { get; set; }
 }
