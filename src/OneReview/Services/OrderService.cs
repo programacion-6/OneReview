@@ -1,6 +1,6 @@
-﻿namespace OneReview.Services;
-using OneReview.Services.Discounts;
-using OneReview.Services.Payments;
+﻿using OneReview.Domain;
+
+namespace OneReview.Services;
 /// <summary>
 /// BAD PRACTICES
 /// - No es flexible, no es facil extender el codigo, no es facil aumenter mas metodos de pago
@@ -16,20 +16,16 @@ using OneReview.Services.Payments;
 /// 1. Aplicar Strategy
 /// </summary>
 public class OrderService
+{
+    private readonly ProductTransactionService _productTransactionService;
+
+    public OrderService(ProductTransactionService productTransactionService)
     {
-        private readonly IDiscountStrategy _discountStrategy;
-        private readonly IPaymentStrategy _paymentStrategy;
-
-        public OrderService(IDiscountStrategy discountStrategy, IPaymentStrategy paymentStrategy)
-        {
-            _discountStrategy = discountStrategy;
-            _paymentStrategy = paymentStrategy;
-        }
-
-        public void ProcessOrder(decimal totalAmount)
-        {
-            totalAmount = _discountStrategy.ApplyDiscount(totalAmount);
-
-            _paymentStrategy.ProcessPayment(totalAmount);
-        }
+        _productTransactionService = productTransactionService;
     }
+
+    public void ProcessOrder(Product product)
+    {
+        _productTransactionService.ProcessPayment(product);
+    }
+}
