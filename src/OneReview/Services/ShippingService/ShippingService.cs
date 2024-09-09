@@ -9,8 +9,8 @@ public class ShippingService
         _shippingStrategy = shippingStrategy;
     }
 
-    public decimal CalculateCost(decimal orderWeight, string destination)
+    public decimal CalculateCost(decimal orderWeight, string origin, string destination)
     {
-        return _shippingStrategy.CalculateShippingCost(orderWeight, destination);
+        return _shippingStrategy.CalculateShippingCost(orderWeight, origin, destination);
     }
 }

@@ -1,9 +1,19 @@
 namespace OneReview.Services;
 
-public class ExpressShippingStrategy : IShippingStrategy
+public class ExpressShippingStrategy : ShippingTemplate, IShippingStrategy
 {
-    public decimal CalculateShippingCost(decimal orderWeight, string destination)
+    public new decimal CalculateShippingCost(decimal orderWeight, string origin, string destination)
     {
-        return orderWeight * 10.0m;
+        return CalculateCostByWeight(orderWeight) + CalculateCostByDistance(origin, destination) + ApplyAdditionalFees();
+    }
+
+    protected override decimal CalculateCostByDistance(string origin, string destination)
+    {
+        return 15.0m;
+    }
+
+    protected override decimal CalculateCostByWeight(decimal weight)
+    {
+        return weight * 5.0m;
     }
 }
