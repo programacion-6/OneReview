@@ -5,7 +5,7 @@ public class StandardShippingStrategy : ShippingTemplate, IShippingStrategy
     
     public new decimal CalculateShippingCost(decimal orderWeight, string origin, string destination)
     {
-        return CalculateCostByWeight(orderWeight) + CalculateCostByDistance(origin, destination) + ApplyAdditionalFees();
+        return CalculateCostByWeight(orderWeight) + CalculateCostByDistance(origin, destination);
     }
 
     protected override decimal CalculateCostByDistance(string origin, string destination)
