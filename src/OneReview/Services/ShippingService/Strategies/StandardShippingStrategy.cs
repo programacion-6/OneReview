@@ -1,9 +1,9 @@
 namespace OneReview.Services;
 
-public class StandardShippingStrategy : ShippingTemplate, IShippingStrategy
+public class StandardShippingStrategy : AShippingTemplate
 {
     
-    public new decimal CalculateShippingCost(decimal orderWeight, string origin, string destination)
+    public override decimal CalculateShippingCost(decimal orderWeight, string origin, string destination)
     {
         return CalculateCostByWeight(orderWeight) + CalculateCostByDistance(origin, destination);
     }

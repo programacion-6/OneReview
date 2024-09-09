@@ -2,9 +2,9 @@ namespace OneReview.Services;
 
 public class ShippingService
 {
-    private readonly IShippingStrategy _shippingStrategy;
+    private readonly AShippingTemplate _shippingStrategy;
 
-    public ShippingService(IShippingStrategy shippingStrategy)
+    public ShippingService(AShippingTemplate shippingStrategy)
     {
         _shippingStrategy = shippingStrategy;
     }
