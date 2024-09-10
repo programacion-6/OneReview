@@ -4,5 +4,5 @@ namespace OneReview.OverServices;
 
 public interface IPaymentService
 {
-    void ProcessPayment(decimal amount, DiscountType discountType);
+    void ProcessPayment(decimal amount);
 }
