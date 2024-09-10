@@ -4,12 +4,16 @@ namespace OneReview.OverServices;
 
 public class PayPalPaymentService : IPaymentService
 {
-    public void ProcessPayment(decimal amount, DiscountType discountType)
-    {
-        IDiscountStrategy discountStrategy = DiscountStrategyFactory.CreateDiscountStrategy(discountType);
-        var discountAmount = discountStrategy.ApplyDiscount(amount);
+    private readonly IDiscountStrategy _discountStrategy;
 
-        // Overly complex payment logic
-        Console.WriteLine($"Processing {discountAmount} through Paypal with {discountType} discount type");
+    public PayPalPaymentService(IDiscountStrategy discountStrategy)
+    {
+        _discountStrategy = discountStrategy;
+    }
+
+    public void ProcessPayment(decimal amount)
+    {
+        var discountAmount = _discountStrategy.ApplyDiscount(amount);
+        Console.WriteLine($"Processing {discountAmount} through PayPal with discount.");
     }
 }
