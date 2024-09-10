@@ -1,11 +1,9 @@
-﻿namespace OneReview.OverServices.Discounts;
+﻿namespace OneReview.OverServices;
 
 public class FlatRateDiscountStrategy : IDiscountStrategy
 {
-    private const decimal RateDiscount = 50;
-
     public decimal ApplyDiscount(decimal totalAmount)
     {
-        return totalAmount - RateDiscount;
+        return totalAmount - DiscountConstants.RateDiscount;
     }
 }
