@@ -1,4 +1,4 @@
-using OneReview.DependencyInjection;
+/*using OneReview.DependencyInjection;
 using OneReview.RequestPipeline;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,4 +16,25 @@ var app = builder.Build();
     app.InitializeDatabase();
 }
 
-app.Run();
+app.Run();*/
+
+
+using OneReview.OverServices.Concretes.Payments;
+using OneReview.OverServices.Decorator;
+using OneReview.OverServices.Interfaces;
+
+namespace OneReview.OverServices;
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        IPaymentStrategy stripePayment = new StripePayment();
+        IPayment basePayment = new BasePayment(stripePayment, 100);
+
+        IPayment percentageDiscount = new PercentageDiscountDecorator(basePayment);
+        IPayment flatDiscount = new FlatDiscountDecorator(percentageDiscount);
+
+        Console.WriteLine($"Monto con descuento porcentaje y flat: {flatDiscount.GetAmount()}");
+    }
+}
