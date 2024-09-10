@@ -1,6 +1,4 @@
-﻿using OneReview.OverServices.Discounts;
-
-namespace OneReview.OverServices;
+﻿namespace OneReview.OverServices;
 
 public interface IPaymentService
 {
