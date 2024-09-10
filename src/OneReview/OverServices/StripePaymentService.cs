@@ -4,11 +4,16 @@ namespace OneReview.OverServices;
 
 public class StripePaymentService : IPaymentService
 {
-    public void ProcessPayment(decimal amount, DiscountType discountType)
-    {
-        IDiscountStrategy discountStrategy = DiscountStrategyFactory.CreateDiscountStrategy(discountType);
-        var discountAmount = discountStrategy.ApplyDiscount(amount);
+    private readonly IDiscountStrategy _discountStrategy;
 
-        Console.WriteLine($"Processing {discountAmount} through Paypal with {discountType} discount type");
+    public StripePaymentService(IDiscountStrategy discountStrategy)
+    {
+        _discountStrategy = discountStrategy;
+    }
+
+    public void ProcessPayment(decimal amount)
+    {
+        var discountAmount = _discountStrategy.ApplyDiscount(amount);
+        Console.WriteLine($"Processing {discountAmount} through Stripe");
     }
 }
