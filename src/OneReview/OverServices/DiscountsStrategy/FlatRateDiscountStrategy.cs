@@ -1,4 +1,4 @@
-﻿namespace OneReview.OverServices.Discounts;
+namespace OneReview.OverServices.DiscountsStrategy;
 
 public class FlatRateDiscountStrategy : IDiscountStrategy
 {

@@ -1,4 +1,4 @@
-using OneReview.OverServices.Discounts;
+using OneReview.OverServices.DiscountsStrategy;
 
 namespace OneReview.OverServices;
 
