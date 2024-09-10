@@ -10,12 +10,12 @@
 /// - Diseño no escalable - Open / Closed matando 
 /// How to fix
 /// - Remove PaymentServiceFactory you can use Dependency Injection
-/// - Separate the Discount Logic from the Payment Service
+/// - Separate the Discount Logic from the Payment Service *
 /// - Inject IDiscountStrategy
 /// - Single Responsibility -> IPaymentService / IDiscountService
 /// </summary>
 
-public class PaymentServiceFactory
+public class PaymentStrategyFactory
 {
     public static IPaymentService CreatePaymentService(PaymentMethod paymentMethod)
     {
