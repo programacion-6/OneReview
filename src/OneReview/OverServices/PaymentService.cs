@@ -1,4 +1,6 @@
-﻿namespace OneReview.OverServices;
+﻿using OneReview.OverServices.Interfaces;
+
+namespace OneReview.OverServices;
 
 /// <summary>
 /// Issues
@@ -15,15 +17,13 @@
 /// - Single Responsibility -> IPaymentService / IDiscountService
 /// </summary>
 
-public class PaymentServiceFactory
+public class PaymentService(IDiscountStrategy discountStrategy, IPaymentStrategy paymentStrategy)
 {
-    public static IPaymentService CreatePaymentService(PaymentMethod paymentMethod)
+
+    public void ProcessOrder(decimal totalAmount)
     {
-        return paymentMethod switch
-        { 
-            PaymentMethod.Paypal => new PayPalPaymentService(),
-            PaymentMethod.Stripe => new StripePaymentService(),
-            _ => throw new NotSupportedException("Payment method not supported"),
-        };
+        totalAmount = discountStrategy.ApplyDiscount(totalAmount);
+
+        paymentStrategy.ProcessPayment(totalAmount);
     }
 }
