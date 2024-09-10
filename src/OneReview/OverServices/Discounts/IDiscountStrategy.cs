@@ -1,4 +1,4 @@
-namespace OneReview.OverServices.DiscountsStrategy;
+namespace OneReview.OverServices.Discounts;
 
 public interface IDiscountStrategy
 {
