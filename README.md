@@ -1,23 +1,8 @@
-# OneReview Project
+# REST API
 
-## Commands used to create the project
+## Environment
+- REST_DB_NAME, is the name of the database
+- REST_DB_ADDRESS, is the address of the database. It can be localhost or IPV4/6
+- REST_DB_PORT, is the port of the database.
 
-`dotnet new sln --name OneReview`
-
-`mkdir src`
-
-`mkdir tests`
-
-`dotnet new webapi -o OneReview`
-
-`dotnet new editorconfig`
-
-`dotnet new globaljson --roll-forward latestMinor --sdk-version 8.0.303`
-
-windows
-`dotnet sln add (ls -r **/**.csproj)`
-
-linux/macos
-`dotnet sln add **/**.csproj`
-
-`dotnet add src/OneReview/OneReview.csproj package DbUp-PostgreSQL`
+The docker-compose file has environmental information that can be used to fill this data.

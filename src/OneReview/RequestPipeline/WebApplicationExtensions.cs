@@ -6,7 +6,7 @@ public static class WebApplicationExtensions
 {
     public static WebApplication InitializeDatabase(this WebApplication app)
     {
-        DbInitializer.Initialize(app.Configuration[DbConstants.DefaultConnectionPath]);
+        DbInitializer.Initialize(app.Configuration[DbConstants.GetDefaultConnectionPath()]);
 
         return app;
     }
