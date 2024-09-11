@@ -9,8 +9,6 @@ using OneReview.Services;
 [Route("api/v1/[controller]")]
 public class ProductsController(ProductsService productsService) : ControllerBase
 {
-    private readonly ProductsService _productsService = productsService;
-
     [HttpPost]
     public IActionResult Create([FromBody] CreateProductRequest request)
     {
@@ -18,7 +16,7 @@ public class ProductsController(ProductsService productsService) : ControllerBas
         var product = request.ToDomain();
 
         // invoking the use case
-        _productsService.Create(product);
+        productsService.Create(product);
 
         // mapping to external representation
         var response = ProductResponse.FromDomain(product);
@@ -34,7 +32,7 @@ public class ProductsController(ProductsService productsService) : ControllerBas
     public IActionResult Get([FromRoute] Guid productId)
     {
         // get the product
-        var product = _productsService.Get(productId);
+        var product = productsService.Get(productId);
 
         // return 200 ok response
         return product is null 
