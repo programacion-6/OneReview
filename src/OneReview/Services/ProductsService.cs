@@ -1,18 +1,19 @@
 ﻿namespace OneReview.Services;
 
 using OneReview.Domain;
+using OneReview.Persistence.Repositories;
 
-public class ProductsService
+public class ProductsService(ProductsRepository productsRepository)
 {
-    private static readonly List<Product> ProductsRepository = [];
+    private readonly ProductsRepository _productsRepository = productsRepository;
 
-    public void Create(Product product)
+    public async Task CreateAsync(Product product)
     {
-        ProductsRepository.Add(product);
+        await _productsRepository.CreateAsync(product);
     }
 
-    public Product Get(Guid id)
+    public async Task<Product> GetAsync(Guid productId)
     {
-        return ProductsRepository.FirstOrDefault(product => product.Id == id);
+        return await _productsRepository.GetByIdAsync(productId);
     }
 }

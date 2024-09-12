@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
     // configure services (DI)
     builder.Services
         .AddServices()
+        .AddPersistance(builder.Configuration)
         .AddControllers();
 }
 

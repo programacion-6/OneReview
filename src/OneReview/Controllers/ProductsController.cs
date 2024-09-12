@@ -12,13 +12,13 @@ public class ProductsController(ProductsService productsService) : ControllerBas
     private readonly ProductsService _productsService = productsService;
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateProductRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
     {
         // mapping to internal representation
         var product = request.ToDomain();
 
         // invoking the use case
-        _productsService.Create(product);
+        await _productsService.CreateAsync(product);
 
         // mapping to external representation
         var response = ProductResponse.FromDomain(product);
@@ -31,13 +31,12 @@ public class ProductsController(ProductsService productsService) : ControllerBas
     }
 
     [HttpGet("{productId:guid}")]
-    public IActionResult Get([FromRoute] Guid productId)
+    public async Task<IActionResult> Get([FromRoute] Guid productId)
     {
         // get the product
-        var product = _productsService.Get(productId);
+        var product = await _productsService.GetAsync(productId);
 
-        // return 200 ok response
-        return product is null 
+        return product is null
             ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Product not found (productId {productId})")
             : Ok(ProductResponse.FromDomain(product));
     }

@@ -2,13 +2,13 @@
 
 public class Product
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
 
-    public string Name { get; set; }
+    public required string Name { get; init; }
 
-    public string Description { get; set; }
+    public required string Description { get; init; }
 
-    public string Category { get; set; }
+    public required string Category { get; init; }
 
-    public string SubCategory { get; set; }
+    public required string SubCategory { get; init; }
 }
