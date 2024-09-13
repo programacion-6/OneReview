@@ -1,43 +1,27 @@
-﻿namespace OneReview.Controllers;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OneReview.Mappers.Requests;
 using OneReview.Mappers.Responses;
+using OneReview.Domain;
 using OneReview.Services;
+
+namespace OneReview.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class ProductsController(ProductsService productsService) : ControllerBase
+public class ProductsController(ProductsService productsService) 
+    : MainController<CreateProductRequest, ProductResponse, Product>
 {
     private readonly ProductsService _productsService = productsService;
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
+    protected override async Task<Product> CreateEntityAsync(CreateProductRequest request)
     {
-        // mapping to internal representation
         var product = request.ToDomain();
-
-        // invoking the use case
         await _productsService.CreateAsync(product);
-
-        // mapping to external representation
-        var response = ProductResponse.FromDomain(product);
-
-        return CreatedAtAction(
-            actionName: nameof(Get),
-            routeValues: new { ProductId = product.Id },
-            value: response
-        );
+        return product;
     }
 
-    [HttpGet("{productId:guid}")]
-    public async Task<IActionResult> Get([FromRoute] Guid productId)
+    protected override async Task<Product> GetEntityAsync(Guid id)
     {
-        // get the product
-        var product = await _productsService.GetAsync(productId);
-
-        return product is null
-            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Product not found (productId {productId})")
-            : Ok(ProductResponse.FromDomain(product));
+        return await _productsService.GetAsync(id);
     }
 }
