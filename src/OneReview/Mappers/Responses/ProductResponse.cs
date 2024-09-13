@@ -7,9 +7,9 @@ public record ProductResponse(
         string Name,
         string Description,
         string Category,
-        string SubCategory)
+        string SubCategory) : IResponse<Product>
 {
-    public static ProductResponse FromDomain(Product product)
+    public static IResponse<Product> FromDomain(Product product)
     {
         return new ProductResponse
         (

@@ -6,7 +6,7 @@ public record CreateProductRequest(
         string Name,
         string Description,
         string Category,
-        string SubCategory)
+        string SubCategory) : IRequest<Product>
 {
     public Product ToDomain()
     {
