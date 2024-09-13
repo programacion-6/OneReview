@@ -7,17 +7,17 @@ public record ProductResponse(
         string Name,
         string Description,
         string Category,
-        string SubCategory)
+        string SubCategory) : IResponse<Product>
 {
-    public static ProductResponse FromDomain(Product product)
+    public static Product FromDomain(Product product)
     {
-        return new ProductResponse
-        (
-            product.Id,
-            product.Name,
-            product.Description,
-            product.Category,
-            product.SubCategory
-        );
+        return new Product
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Category = product.Category,
+            SubCategory = product.SubCategory
+        };
     }
 }
