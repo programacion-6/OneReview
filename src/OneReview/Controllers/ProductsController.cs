@@ -1,15 +1,23 @@
-﻿namespace OneReview.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Mvc;
 using OneReview.Mappers.Requests;
 using OneReview.Mappers.Responses;
 using OneReview.Services;
 
+namespace OneReview.Controllers;
+
 [ApiController]
 [Route("api/v1/[controller]")]
-public class ProductsController(ProductsService productsService) : ControllerBase
+public class ProductsController : ControllerBase
 {
-    private readonly ProductsService _productsService = productsService;
+    private readonly MainController _mainController;
+    private readonly ProductsService _productsService;
+
+    public ProductsController(ProductsService productsService, MainController mainController)
+    {
+        _productsService = productsService;
+        _mainController = mainController;
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
@@ -23,10 +31,10 @@ public class ProductsController(ProductsService productsService) : ControllerBas
         // mapping to external representation
         var response = ProductResponse.FromDomain(product);
 
-        return CreatedAtAction(
-            actionName: nameof(Get),
-            routeValues: new { ProductId = product.Id },
-            value: response
+        return _mainController.CreatedResponse(
+            nameof(Get), 
+            product.Id, 
+            response
         );
     }
 
@@ -37,7 +45,7 @@ public class ProductsController(ProductsService productsService) : ControllerBas
         var product = await _productsService.GetAsync(productId);
 
         return product is null
-            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Product not found (productId {productId})")
+            ? _mainController.NotFoundProblem(productId, "Product")
             : Ok(ProductResponse.FromDomain(product));
     }
 }
