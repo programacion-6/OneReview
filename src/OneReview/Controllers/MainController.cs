@@ -1,40 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
-using OneReview.Domain;
-using OneReview.Mappers.Requests;
-using OneReview.Mappers.Responses;
 
 namespace OneReview.Controllers;
 
-[ApiController]
-[Route("api/v1/[controller]")]
-public abstract class MainController<TRequest, TResponse, TDomain> : ControllerBase
-    where TDomain : IEntity
-    where TRequest : IRequest<TDomain>
-    where TResponse : IResponse<TDomain>
+public class MainController : ControllerBase
 {
-    protected abstract Task CreateAsync(TDomain domainEntity);
-    protected abstract Task<TDomain> GetAsync(Guid id);
-
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] TRequest request)
+    public IActionResult CreatedResponse<T>(string actionName, Guid id, T response)
     {
-        var domainEntity = request.ToDomain();
-        await CreateAsync(domainEntity);
-        var response = TResponse.FromDomain(domainEntity);
-
         return CreatedAtAction(
-            actionName: nameof(Get),
-            routeValues: new { id = domainEntity.Id },
+            actionName: actionName,
+            routeValues: new { id },
             value: response
         );
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public IActionResult NotFoundProblem(Guid id, string entityName = "Entity")
     {
-        var domainEntity = await GetAsync(id);
-        return domainEntity == null
-            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Entity not found (ID {id})")
-            : Ok(TResponse.FromDomain(domainEntity));
+        return Problem(
+            statusCode: StatusCodes.Status404NotFound,
+            detail: $"{entityName} not found (ID: {id})"
+        );
     }
 }
