@@ -7,9 +7,9 @@ public record ProductResponse(
         string Name,
         string Description,
         string Category,
-        string SubCategory)
+        string SubCategory) : IMapperFromDomain<Product, ProductResponse>
 {
-    public static ProductResponse FromDomain(Product product)
+    public ProductResponse FromDomain(Product product)
     {
         return new ProductResponse
         (
