@@ -1,19 +1,30 @@
 ﻿namespace OneReview.Services;
 
-using OneReview.Domain;
+using OneReview.Mappers.Requests;
+using OneReview.Mappers.Responses;
 using OneReview.Persistence.Repositories;
 
-public class ProductsService(ProductsRepository productsRepository)
+public class ProductsService
 {
-    private readonly ProductsRepository _productsRepository = productsRepository;
+    private readonly ProductsRepository _productsRepository;
 
-    public async Task CreateAsync(Product product)
+    public ProductsService(ProductsRepository productsRepository)
     {
-        await _productsRepository.CreateAsync(product);
+        _productsRepository = productsRepository;
     }
 
-    public async Task<Product> GetAsync(Guid productId)
+    public async Task<ProductResponse> CreateProductAsync(CreateProductRequest request)
     {
-        return await _productsRepository.GetByIdAsync(productId);
+        var product = request.ToDomain();
+
+        await _productsRepository.CreateAsync(product);
+
+        return ProductResponse.FromDomain(product);
+    }
+
+    public async Task<ProductResponse> GetProductByIdAsync(Guid productId)
+    {
+        var product = await _productsRepository.GetByIdAsync(productId);
+        return product is null ? null : ProductResponse.FromDomain(product);
     }
 }
