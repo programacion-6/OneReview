@@ -1,6 +1,8 @@
-﻿namespace OneReview.Domain;
+﻿using OneReview.Domain.Interface;
 
-public class Product
+namespace OneReview.Domain;
+
+public class Product : IEntity
 {
     public Guid Id { get; init; } = Guid.NewGuid();
 
