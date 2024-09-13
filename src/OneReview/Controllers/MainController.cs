@@ -13,7 +13,7 @@ public class MainController : ControllerBase
         );
     }
 
-    public IActionResult NotFoundProblem(Guid id, string entityName = "Entity")
+    public IActionResult NotFoundProblem(Guid id, string entityName)
     {
         return Problem(
             statusCode: StatusCodes.Status404NotFound,
