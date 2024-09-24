@@ -6,5 +6,5 @@ public class ValidationResponse
 
     public string ErrorMessage { get; set; }
 
-    public string AttemptedValue { get; set; }
+    public object AttemptedValue { get; set; }
 }

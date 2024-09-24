@@ -1,6 +1,7 @@
 ﻿namespace OneReview.Services;
 
 using OneReview.Domain;
+using OneReview.Helpers;
 using OneReview.Mappers.Responses;
 using OneReview.Models;
 using OneReview.Persistence.Repositories;
@@ -14,7 +15,7 @@ public class ProductsService(ProductsRepository productsRepository) : IService<P
     {
         var validator = new ProductsValidator();
         var validationResult = validator.Validate(product);
-        ServiceResult<ProductResponse> response = new() { Success = validationResult.IsValid };
+        var response = new ServiceResult<ProductResponse> { Success = validationResult.IsValid };
 
         if (validationResult.IsValid)
         {
@@ -23,7 +24,7 @@ public class ProductsService(ProductsRepository productsRepository) : IService<P
         }
         else
         {
-            // response.Errors = validationResult.Errors.Select(x => x).ToArray();
+            response.Errors = validationResult.Errors.Select(x => x.ToValidationResponse()).ToArray();
         }
 
         return response;

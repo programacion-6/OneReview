@@ -2,7 +2,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 using OneReview.Mappers.Requests;
-using OneReview.Mappers.Responses;
 using OneReview.Services;
 
 [ApiController]
@@ -18,10 +17,7 @@ public class ProductsController(ProductsService productsService) : ControllerBas
         var product = request.ToDomain();
 
         // invoking the use case
-        await _productsService.CreateAsync(product);
-
-        // mapping to external representation
-        var response = ProductResponse.FromDomain(product);
+        var response = await _productsService.CreateAsync(product);
 
         return CreatedAtAction(
             actionName: nameof(Get),
