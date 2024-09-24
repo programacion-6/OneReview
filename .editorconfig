@@ -330,6 +330,8 @@ dotnet_naming_symbols.local_functions.applicable_kinds = local_function
 dotnet_naming_symbols.local_functions.applicable_accessibilities = *
 dotnet_naming_symbols.local_functions.required_modifiers = 
 
+dotnet_diagnostic.CA1005.severity = suggestion
+
 # Naming styles
 
 dotnet_naming_style.pascalcase.required_prefix = 

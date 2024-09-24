@@ -11,7 +11,7 @@ public class ProductsRepository(IDbConnectionFactory dbConnectionFactory)
 {
     private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
 
-    public async Task CreateAsync(Product product)
+    public async Task<Product> CreateAsync(Product product)
     {
         // get db connection
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync();
@@ -23,6 +23,8 @@ public class ProductsRepository(IDbConnectionFactory dbConnectionFactory)
         var result = await connection.ExecuteAsync(query, product);
 
         result.Throw().IfNegativeOrZero();
+
+        return await GetByIdAsync(product.Id);
     }
 
     public async Task<Product> GetByIdAsync(Guid productId)

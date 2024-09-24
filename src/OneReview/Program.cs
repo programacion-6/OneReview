@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     // configure services (DI)
     builder.Services
+        .AddGlobalErrorHandling()
         .AddServices()
         .AddPersistance(builder.Configuration)
         .AddControllers();
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 {
     // configure request pipeline
+    app.UseGlobalErrorHandling();
     app.MapControllers();
     app.InitializeDatabase();
 }

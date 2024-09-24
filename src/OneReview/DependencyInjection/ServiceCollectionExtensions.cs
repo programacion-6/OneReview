@@ -21,4 +21,19 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddGlobalErrorHandling(this IServiceCollection services)
+    {
+        services.AddProblemDetails(options =>
+        {
+            options.CustomizeProblemDetails = context =>
+            {
+                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
+                context.ProblemDetails.Extensions["serviceVersion"] = "0.0.1";
+                context.ProblemDetails.Extensions["exception"] = "";
+            };
+        });
+
+        return services;
+    }
 }

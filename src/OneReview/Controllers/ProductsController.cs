@@ -34,10 +34,10 @@ public class ProductsController(ProductsService productsService) : ControllerBas
     public async Task<IActionResult> Get([FromRoute] Guid productId)
     {
         // get the product
-        var product = await _productsService.GetAsync(productId);
+        var result = await _productsService.GetByIdAsync(productId);
 
-        return product is null
+        return result.Data is null
             ? Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Product not found (productId {productId})")
-            : Ok(ProductResponse.FromDomain(product));
+            : Ok(result);
     }
 }

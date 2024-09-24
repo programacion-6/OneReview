@@ -4,8 +4,8 @@ POST {{host}}/api/v1/products
 Content-Type: application/json
 
 {
-  "name": "zenbook",
-  "description": "best laptop for programming",
+  "name": "omen16",
+  "description": "best laptop for editing",
   "category": "laptops",
   "subCategory": "technology"
 }

@@ -1,19 +1,41 @@
 ﻿namespace OneReview.Services;
 
 using OneReview.Domain;
+using OneReview.Mappers.Responses;
+using OneReview.Models;
 using OneReview.Persistence.Repositories;
+using OneReview.Validators;
 
-public class ProductsService(ProductsRepository productsRepository)
+public class ProductsService(ProductsRepository productsRepository) : IService<Product, ProductResponse>
 {
     private readonly ProductsRepository _productsRepository = productsRepository;
 
-    public async Task CreateAsync(Product product)
+    public async Task<ServiceResult<ProductResponse>> CreateAsync(Product product)
     {
-        await _productsRepository.CreateAsync(product);
+        var validator = new ProductsValidator();
+        var validationResult = validator.Validate(product);
+        ServiceResult<ProductResponse> response = new() { Success = validationResult.IsValid };
+
+        if (validationResult.IsValid)
+        {
+            var productResponse = await _productsRepository.CreateAsync(product);
+            response.Data = ProductResponse.FromDomain(productResponse);
+        }
+        else
+        {
+            // response.Errors = validationResult.Errors.Select(x => x).ToArray();
+        }
+
+        return response;
     }
 
-    public async Task<Product> GetAsync(Guid productId)
+    public async Task<ServiceResult<ProductResponse>> GetByIdAsync(Guid productId)
     {
-        return await _productsRepository.GetByIdAsync(productId);
+        var product = await _productsRepository.GetByIdAsync(productId);
+
+        return new ServiceResult<ProductResponse> 
+        { 
+            Data = ProductResponse.FromDomain(product)
+        };
     }
 }
