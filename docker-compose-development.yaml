@@ -1,0 +1,23 @@
+name: onereviewdev
+
+services:
+  # posgreSQL database
+  db:
+    container_name: one-review-dev-db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: dbpreview
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: strong_password
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dbpreview"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_dev_data:

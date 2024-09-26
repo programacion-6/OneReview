@@ -10,7 +10,7 @@ services:
     ports: 
       - "5001:5001"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - Database__ConnectionString__DefaultConnection=Host=db;Port=5432;Database=dbpreview;Username=postgres;Password=strong_password
     depends_on:
       db:

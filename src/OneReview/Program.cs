@@ -3,6 +3,10 @@ using OneReview.RequestPipeline;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+    if (builder.Environment.IsDevelopment())
+    {
+        Console.WriteLine("---------DEVELOPMENT MODE---------");
+    }
     // configure services (DI)
     builder.Services
         .AddGlobalErrorHandling()
